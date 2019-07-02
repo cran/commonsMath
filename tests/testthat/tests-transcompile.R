@@ -1,6 +1,6 @@
 context("transcompile")
 
-# skip("transcompile")
+if ( skipall ) skip("transcompile")
 
 myExpect <- function(f,args=list(),identical=TRUE, tolerance=sqrt(.Machine$double.eps)) {
   g <- s^f
@@ -83,7 +83,7 @@ test_that("special functions",{
 
 })
 
-n  <- 100
+n  <- 1000
 nStdDev <- 4
 
 test_that("uniform distribution",{
