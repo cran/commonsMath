@@ -362,7 +362,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h2>Overview</h2>
 <p>The commonsMath package provides access to the <a href="https://commons.apache.org/proper/commons-math/">Apache Commons Mathematics Library</a>. It can can accessed via the:</p>
 <ul>
-<li><a href="https://cran.r-project.org/package=rscala">rscala</a> package, or</li>
+<li><a href="https://github.com/dbdahl/rscala">rscala</a> package, or</li>
 <li><a href="https://cran.r-project.org/package=rJava">rJava</a> package.</li>
 </ul>
 <p>We demonstrate below how to use it in:</p>
@@ -380,16 +380,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>rng1 &lt;-<span class="st"> </span>s<span class="op">$</span><span class="kw">.new_org.apache.commons.math3.random.RandomDataGenerator</span>()</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>rng1<span class="op">$</span><span class="kw">reSeed</span>(7342L)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>rng1<span class="op">$</span><span class="kw">nextGaussian</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [1] -1.167763</code></pre>
 </div>
 <div id="access-via-rjava" class="section level4">
 <h4>Access via rJava</h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;rJava&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">.jinit</span>(<span class="kw">Sys.glob</span>(<span class="kw">file.path</span>(<span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;commonsMath&quot;</span>), <span class="st">&quot;java&quot;</span>, <span class="st">&quot;*.jar&quot;</span>)))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>rng2 &lt;-<span class="st"> </span><span class="kw">.jnew</span>(<span class="st">&quot;org.apache.commons.math3.random.RandomDataGenerator&quot;</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>rng2<span class="op">$</span><span class="kw">reSeed</span>(<span class="kw">.jlong</span>(7342L))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>rng2<span class="op">$</span><span class="kw">nextGaussian</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [1] -1.167763</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;rJava&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">.jinit</span>(<span class="kw">Sys.glob</span>(<span class="kw">file.path</span>(<span class="kw">system.file</span>(<span class="dt">package=</span><span class="st">&quot;commonsMath&quot;</span>), <span class="st">&quot;java&quot;</span>, <span class="st">&quot;*.jar&quot;</span>)))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>rng2 &lt;-<span class="st"> </span><span class="kw">.jnew</span>(<span class="st">&quot;org.apache.commons.math3.random.RandomDataGenerator&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>rng2<span class="op">$</span><span class="kw">reSeed</span>(<span class="kw">.jlong</span>(7342L))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>rng2<span class="op">$</span><span class="kw">nextGaussian</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="usage-in-r-packages" class="section level2">
@@ -399,29 +397,29 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The <code>DESCRIPTION</code> should have <code>Imports: rscala, commonsMath</code>.</p>
 <p>The <code>NAMESPACE</code> should have <code>import(rscala)</code>.</p>
 <p>Define an <code>.onLoad</code> function like the following:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>.onLoad &lt;-<span class="st"> </span><span class="cf">function</span>(libname, pkgname) {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  s &lt;-<span class="st"> </span><span class="kw">scala</span>(<span class="st">&quot;commonsMath&quot;</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  <span class="kw">assign</span>(<span class="st">&quot;s&quot;</span>, s, <span class="dt">envir =</span> <span class="kw">parent.env</span>(<span class="kw">environment</span>()))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>.onLoad &lt;-<span class="st"> </span><span class="cf">function</span>(libname, pkgname) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  s &lt;-<span class="st"> </span><span class="kw">scala</span>(<span class="st">&quot;commonsMath&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="kw">assign</span>(<span class="st">&quot;s&quot;</span>, s, <span class="dt">envir =</span> <span class="kw">parent.env</span>(<span class="kw">environment</span>()))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Package functions can then assess classes and methods from the commonsMath package, e.g.:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>rstdnorm &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  rng1 &lt;-<span class="st"> </span>s<span class="op">$</span><span class="kw">.new_org.apache.commons.math3.random.RandomDataGenerator</span>()</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  rng1<span class="op">$</span><span class="kw">nextGaussian</span>(<span class="fl">0.0</span>,<span class="fl">1.0</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>rstdnorm &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  rng1 &lt;-<span class="st"> </span>s<span class="op">$</span><span class="kw">.new_org.apache.commons.math3.random.RandomDataGenerator</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  rng1<span class="op">$</span><span class="kw">nextGaussian</span>(<span class="fl">0.0</span>,<span class="fl">1.0</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 <div id="access-via-rjava-1" class="section level4">
 <h4>Access via rJava</h4>
 <p>The <code>DESCRIPTION</code> should have <code>Imports: rJava, commonsMath</code>.</p>
 <p>The <code>NAMESPACE</code> should first have <code>import(rscala)</code> and then have <code>import(commonsMath)</code>.</p>
 <p>Define an <code>.onLoad</code> function like the following:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>.onLoad &lt;-<span class="st"> </span><span class="cf">function</span>(libname, pkgname) {</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  <span class="kw">.jpackage</span>(pkgname, <span class="dt">lib.loc=</span>libname)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>.onLoad &lt;-<span class="st"> </span><span class="cf">function</span>(libname, pkgname) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  <span class="kw">.jpackage</span>(pkgname, <span class="dt">lib.loc=</span>libname)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Package functions can then assess classes and methods from the commonsMath package, e.g.:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>rstdnorm &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  rng2 &lt;-<span class="st"> </span><span class="kw">.jnew</span>(<span class="st">&quot;org.apache.commons.math3.random.RandomDataGenerator&quot;</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>  rng2<span class="op">$</span><span class="kw">nextGaussian</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>rstdnorm &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  rng2 &lt;-<span class="st"> </span><span class="kw">.jnew</span>(<span class="st">&quot;org.apache.commons.math3.random.RandomDataGenerator&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  rng2<span class="op">$</span><span class="kw">nextGaussian</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 </div>
 
